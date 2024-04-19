@@ -2,7 +2,7 @@ import {
   CLIPConfig,
   CLIPMode,
   DetectFaceResult,
-  DetectTattoosResult
+  DetectTattoosResult,
   IMachineLearningRepository,
   ModelConfig,
   ModelType,
