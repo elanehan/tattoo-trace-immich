@@ -18,6 +18,7 @@
     mdiMagnifyPlusOutline,
     mdiMotionPauseOutline,
     mdiPlaySpeed,
+    mdiEyeCircleOutline,
   } from '@mdi/js';
   import { createEventDispatcher } from 'svelte';
   import ContextMenu from '../shared-components/context-menu/context-menu.svelte';
@@ -33,6 +34,7 @@
   export let showDetailButton: boolean;
   export let showSlideshow = false;
   export let hasStackChildren = false;
+  export let showTattoosDetectionButton: boolean;
 
   $: isOwner = asset.ownerId === $user?.id;
 
@@ -53,6 +55,7 @@
     runJob: AssetJobName;
     playSlideShow: void;
     unstack: void;
+    searchTattoos: void;
   }>();
 
   let contextMenuPosition = { x: 0, y: 0 };
@@ -127,6 +130,15 @@
           const copyEvent = new CustomEvent('copyImage');
           window.dispatchEvent(copyEvent);
         }}
+      />
+    {/if}
+
+    {#if showTattoosDetectionButton}
+      <CircleIconButton
+        isOpacity={true}
+        icon={mdiEyeCircleOutline}
+        title="Detect Tattoos"
+        on:click={() => dispatch('searchTattoos')}
       />
     {/if}
 

@@ -84,7 +84,8 @@
   let isShowActivity = false;
   let isLiked: ActivityResponseDto | null = null;
   let numberOfComments: number;
-
+  let isShowTattoosDetect = false;
+  let shouldShowTattoosDetectionButton = asset.type === AssetTypeEnum.Image || asset.type === AssetTypeEnum.Video;
   $: {
     if (asset.stackCount && asset.stack) {
       $stackAssetsStore = asset.stack;
@@ -561,6 +562,11 @@
       await handleError(error, `Unable to unstack`);
     }
   };
+
+  const detectTattoos = () => {
+    isShowTattoosDetect = true;
+  };
+
 </script>
 
 <section
@@ -576,6 +582,7 @@
         showCopyButton={canCopyImagesToClipboard && asset.type === AssetTypeEnum.Image}
         showZoomButton={asset.type === AssetTypeEnum.Image}
         showMotionPlayButton={!!asset.livePhotoVideoId}
+        showTattoosDetectionButton={shouldShowTattoosDetectionButton}
         showDownloadButton={shouldShowDownloadButton}
         showDetailButton={shouldShowDetailButton}
         showSlideshow={!!assetStore}
@@ -594,6 +601,7 @@
         on:runJob={({ detail: job }) => handleRunJob(job)}
         on:playSlideShow={() => ($slideshowState = SlideshowState.PlaySlideshow)}
         on:unstack={handleUnstack}
+        on:searchTattoos={() => detectTattoos(asset)}
       />
     </div>
   {/if}
