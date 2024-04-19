@@ -1,7 +1,8 @@
-import { CLIPConfig, RecognitionConfig } from '../smart-info/dto';
+import { CLIPConfig, RecognitionConfig, TattoosRecognitionConfig } from '../smart-info/dto';
 
 export const IMachineLearningRepository = 'IMachineLearningRepository';
 
+// An interface that represents the input data structure expected by models that process visual information, such as images
 export interface VisionModelInput {
   imagePath: string;
 }
@@ -25,9 +26,18 @@ export interface DetectFaceResult {
   embedding: number[];
 }
 
+// Define the structure of the result of the detectTattoo model
+// Our model returns images with tattoos, confidence scores, and prompts
+export interface DetectTattoosResult {
+  image: string; // base-64 encoded image
+  score: number;
+  prompt: string;
+}
+
 export enum ModelType {
   FACIAL_RECOGNITION = 'facial-recognition',
   CLIP = 'clip',
+  TATTOOS_RECOGNITION = 'tattoos-recognition',
 }
 
 export enum CLIPMode {
@@ -35,8 +45,15 @@ export enum CLIPMode {
   TEXT = 'text',
 }
 
+// Specify possible types of model input, and can influence the behavior or processing pipeline of the model 
+export enum MediaMode {
+  IMAGE = 'image',
+  VIDEO = 'video',
+}
+
 export interface IMachineLearningRepository {
   encodeImage(url: string, input: VisionModelInput, config: CLIPConfig): Promise<number[]>;
   encodeText(url: string, input: TextModelInput, config: CLIPConfig): Promise<number[]>;
   detectFaces(url: string, input: VisionModelInput, config: RecognitionConfig): Promise<DetectFaceResult[]>;
+  detectTattoos(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<DetectTattoosResult[]>;
 }

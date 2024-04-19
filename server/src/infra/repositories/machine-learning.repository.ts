@@ -2,10 +2,13 @@ import {
   CLIPConfig,
   CLIPMode,
   DetectFaceResult,
+  DetectTattoosResult
   IMachineLearningRepository,
   ModelConfig,
   ModelType,
   RecognitionConfig,
+  TattoosRecognitionConfig,
+  MediaMode,
   TextModelInput,
   VisionModelInput,
 } from '@app/domain';
@@ -32,6 +35,10 @@ export class MachineLearningRepository implements IMachineLearningRepository {
 
   detectFaces(url: string, input: VisionModelInput, config: RecognitionConfig): Promise<DetectFaceResult[]> {
     return this.predict<DetectFaceResult[]>(url, input, { ...config, modelType: ModelType.FACIAL_RECOGNITION });
+  }
+
+  detectTattoos(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<DetectTattoosResult[]> {
+    return this.predict<DetectTattoosResult[]>(url, input, { ...config, modelType: ModelType.TATTOOS_RECOGNITION });
   }
 
   encodeImage(url: string, input: VisionModelInput, config: CLIPConfig): Promise<number[]> {

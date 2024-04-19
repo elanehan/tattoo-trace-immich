@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 import { Optional } from '../../domain.util';
-import { CLIPMode, ModelType } from '../../repositories';
+import { CLIPMode, ModelType, MediaMode } from '../../repositories';
 
 export class ModelConfig {
   @IsBoolean()
@@ -45,4 +45,24 @@ export class RecognitionConfig extends ModelConfig {
   @Type(() => Number)
   @ApiProperty({ type: 'integer' })
   minFaces!: number;
+}
+
+// Define the structure of data used to configure the detectTattoos model
+export class TattoosRecognitionConfig extends ModelConfig {
+  @IsNumber()
+  @Min(0)
+  @Max(1)
+  @Type(() => Number)
+  @ApiProperty({ type: 'number', format: 'float' }) // Define the structure of the score field
+  minScore!: number; // The minimum confidence score for a tattoo to be considered a tattoo
+
+  @IsEnum(MediaMode)
+  @Optional()
+  @ApiProperty({ enumName: 'MediaMode', enum: MediaMode }) // Define the structure of the mediaMode field
+  mediaMode!: MediaMode; // The type of media the model will be applied to
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  prompt!: string; // The prompt model returns when a tattoo is detected
 }
