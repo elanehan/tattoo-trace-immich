@@ -33,6 +33,7 @@ import {
   TagController,
   TrashController,
   UserController,
+  TattoosRecognizeController,
 } from './controllers';
 import { ErrorInterceptor, FileUploadInterceptor } from './interceptors';
 
@@ -68,6 +69,7 @@ import { ErrorInterceptor, FileUploadInterceptor } from './interceptors';
     TrashController,
     UserController,
     PersonController,
+    TattoosRecognizeController
   ],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: ErrorInterceptor },
