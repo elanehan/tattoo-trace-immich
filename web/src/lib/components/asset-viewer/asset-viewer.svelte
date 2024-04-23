@@ -84,8 +84,8 @@
   let isShowActivity = false;
   let isLiked: ActivityResponseDto | null = null;
   let numberOfComments: number;
-  let isShowTattoosDetect = false;
-  let shouldShowTattoosDetectionButton = asset.type === AssetTypeEnum.Image || asset.type === AssetTypeEnum.Video;
+  let isShowTattoosRecognize = false;
+  let shouldShowTattoosRecognitionButton = asset.type === AssetTypeEnum.Image || asset.type === AssetTypeEnum.Video;
   $: {
     if (asset.stackCount && asset.stack) {
       $stackAssetsStore = asset.stack;
@@ -563,8 +563,8 @@
     }
   };
 
-  const detectTattoos = () => {
-    isShowTattoosDetect = true;
+  const recognizeTattoos = () => {
+    isShowTattoosRecognize = true;
   };
 
 </script>
@@ -582,7 +582,7 @@
         showCopyButton={canCopyImagesToClipboard && asset.type === AssetTypeEnum.Image}
         showZoomButton={asset.type === AssetTypeEnum.Image}
         showMotionPlayButton={!!asset.livePhotoVideoId}
-        showTattoosDetectionButton={shouldShowTattoosDetectionButton}
+        showTattoosRecognitionButton={shouldShowTattoosRecognitionButton}
         showDownloadButton={shouldShowDownloadButton}
         showDetailButton={shouldShowDetailButton}
         showSlideshow={!!assetStore}
@@ -601,7 +601,7 @@
         on:runJob={({ detail: job }) => handleRunJob(job)}
         on:playSlideShow={() => ($slideshowState = SlideshowState.PlaySlideshow)}
         on:unstack={handleUnstack}
-        on:searchTattoos={() => detectTattoos(asset)}
+        on:searchTattoos={() => recognizeTattoos(asset)}
       />
     </div>
   {/if}

@@ -34,7 +34,7 @@
   export let showDetailButton: boolean;
   export let showSlideshow = false;
   export let hasStackChildren = false;
-  export let showTattoosDetectionButton: boolean;
+  export let showTattoosRecognitionButton: boolean;
 
   $: isOwner = asset.ownerId === $user?.id;
 
@@ -133,11 +133,11 @@
       />
     {/if}
 
-    {#if showTattoosDetectionButton}
+    {#if showTattoosRecognitionButton}
       <CircleIconButton
         isOpacity={true}
         icon={mdiEyeCircleOutline}
-        title="Detect Tattoos"
+        title="Recognize Tattoos"
         on:click={() => dispatch('searchTattoos')}
       />
     {/if}

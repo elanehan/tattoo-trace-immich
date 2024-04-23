@@ -28,7 +28,7 @@ export interface DetectFaceResult {
 
 // Define the structure of the result of the detectTattoo model
 // Our model returns images with tattoos, confidence scores, and prompts
-export interface DetectTattoosResult {
+export interface RecognizeTattoosResult {
   image: string; // base-64 encoded image
   score: number;
   prompt: string;
@@ -55,5 +55,5 @@ export interface IMachineLearningRepository {
   encodeImage(url: string, input: VisionModelInput, config: CLIPConfig): Promise<number[]>;
   encodeText(url: string, input: TextModelInput, config: CLIPConfig): Promise<number[]>;
   detectFaces(url: string, input: VisionModelInput, config: RecognitionConfig): Promise<DetectFaceResult[]>;
-  detectTattoos(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<DetectTattoosResult[]>;
+  recognizeTattoos(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<RecognizeTattoosResult[]>;
 }
