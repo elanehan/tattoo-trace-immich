@@ -332,6 +332,8 @@ class ApiClient {
           return MapMarkerResponseDto.fromJson(value);
         case 'MapTheme':
           return MapThemeTypeTransformer().decode(value);
+        case 'MediaMode':
+          return MediaModeTypeTransformer().decode(value);
         case 'MemoryLaneResponseDto':
           return MemoryLaneResponseDto.fromJson(value);
         case 'MergePersonDto':
@@ -458,6 +460,12 @@ class ApiClient {
           return TagResponseDto.fromJson(value);
         case 'TagTypeEnum':
           return TagTypeEnumTypeTransformer().decode(value);
+        case 'TattoosRecognitionConfig':
+          return TattoosRecognitionConfig.fromJson(value);
+        case 'TattoosRecognitionResponseDto':
+          return TattoosRecognitionResponseDto.fromJson(value);
+        case 'TattoosRecognizeItem':
+          return TattoosRecognizeItem.fromJson(value);
         case 'ThumbnailFormat':
           return ThumbnailFormatTypeTransformer().decode(value);
         case 'TimeBucketResponseDto':

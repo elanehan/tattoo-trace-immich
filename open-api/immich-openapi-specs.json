@@ -5669,6 +5669,48 @@
         ]
       }
     },
+    "/tattoos-recognize/{id}": {
+      "get": {
+        "operationId": "getTattoosRecognize",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TattoosRecognitionResponseDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          },
+          {
+            "cookie": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "TattoosRecognize"
+        ]
+      }
+    },
     "/trash/empty": {
       "post": {
         "operationId": "emptyTrash",
@@ -8002,6 +8044,13 @@
         ],
         "type": "string"
       },
+      "MediaMode": {
+        "enum": [
+          "image",
+          "video"
+        ],
+        "type": "string"
+      },
       "MemoryLaneResponseDto": {
         "properties": {
           "assets": {
@@ -8038,7 +8087,8 @@
       "ModelType": {
         "enum": [
           "facial-recognition",
-          "clip"
+          "clip",
+          "tattoos-recognition"
         ],
         "type": "string"
       },
@@ -8614,6 +8664,9 @@
           "smartSearch": {
             "type": "boolean"
           },
+          "tattoosRecognition": {
+            "type": "boolean"
+          },
           "trash": {
             "type": "boolean"
           }
@@ -8629,6 +8682,7 @@
           "search",
           "sidecar",
           "smartSearch",
+          "tattoosRecognition",
           "trash"
         ],
         "type": "object"
@@ -9257,6 +9311,9 @@
           "facialRecognition": {
             "$ref": "#/components/schemas/RecognitionConfig"
           },
+          "tattoosRecognition": {
+            "$ref": "#/components/schemas/TattoosRecognitionConfig"
+          },
           "url": {
             "type": "string"
           }
@@ -9265,6 +9322,7 @@
           "clip",
           "enabled",
           "facialRecognition",
+          "tattoosRecognition",
           "url"
         ],
         "type": "object"
@@ -9552,6 +9610,75 @@
           "CUSTOM"
         ],
         "type": "string"
+      },
+      "TattoosRecognitionConfig": {
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "mediaMode": {
+            "$ref": "#/components/schemas/MediaMode"
+          },
+          "minScore": {
+            "format": "float",
+            "type": "number"
+          },
+          "modelName": {
+            "type": "string"
+          },
+          "modelType": {
+            "$ref": "#/components/schemas/ModelType"
+          },
+          "prompt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "enabled",
+          "minScore",
+          "modelName",
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "TattoosRecognitionResponseDto": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/TattoosRecognizeItem"
+            },
+            "type": "array"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data",
+          "id"
+        ],
+        "type": "object"
+      },
+      "TattoosRecognizeItem": {
+        "properties": {
+          "image": {
+            "description": "base-64 encoded image",
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "image",
+          "prompt",
+          "score"
+        ],
+        "type": "object"
       },
       "ThumbnailFormat": {
         "enum": [

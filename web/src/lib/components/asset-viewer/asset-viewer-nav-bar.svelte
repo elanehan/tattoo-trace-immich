@@ -18,7 +18,7 @@
     mdiMagnifyPlusOutline,
     mdiMotionPauseOutline,
     mdiPlaySpeed,
-    mdiEyeCircleOutline,
+    mdiDataMatrixScan,
   } from '@mdi/js';
   import { createEventDispatcher } from 'svelte';
   import ContextMenu from '../shared-components/context-menu/context-menu.svelte';
@@ -136,8 +136,8 @@
     {#if showTattoosRecognitionButton}
       <CircleIconButton
         isOpacity={true}
-        icon={mdiEyeCircleOutline}
-        title="Recognize Tattoos"
+        icon={mdiDataMatrixScan}
+        title="Trace Tattoos"
         on:click={() => dispatch('searchTattoos')}
       />
     {/if}

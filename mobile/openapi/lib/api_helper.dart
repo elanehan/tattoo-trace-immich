@@ -94,6 +94,9 @@ String parameterToString(dynamic value) {
   if (value is MapTheme) {
     return MapThemeTypeTransformer().encode(value).toString();
   }
+  if (value is MediaMode) {
+    return MediaModeTypeTransformer().encode(value).toString();
+  }
   if (value is ModelType) {
     return ModelTypeTypeTransformer().encode(value).toString();
   }

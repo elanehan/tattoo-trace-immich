@@ -4,8 +4,8 @@
  * DO NOT MODIFY - This file has been generated using oazapfts.
  * See https://www.npmjs.com/package/oazapfts
  */
-import * as Oazapfts from "oazapfts/lib/runtime";
-import * as QS from "oazapfts/lib/runtime/query";
+import * as Oazapfts from "@oazapfts/runtime";
+import * as QS from "@oazapfts/runtime/query";
 export const defaults: Oazapfts.Defaults<Oazapfts.CustomHeaders> = {
     headers: {},
     baseUrl: "/api",
@@ -630,6 +630,7 @@ export type ServerFeaturesDto = {
     search: boolean;
     sidecar: boolean;
     smartSearch: boolean;
+    tattoosRecognition: boolean;
     trash: boolean;
 };
 export type ServerMediaTypesResponseDto = {
@@ -770,7 +771,7 @@ export type SystemConfigLoggingDto = {
     level: LogLevel;
 };
 export type ClipMode = "vision" | "text";
-export type ModelType = "facial-recognition" | "clip";
+export type ModelType = "facial-recognition" | "clip" | "tattoos-recognition";
 export type ClipConfig = {
     enabled: boolean;
     mode?: ClipMode;
@@ -785,10 +786,20 @@ export type RecognitionConfig = {
     modelName: string;
     modelType?: ModelType;
 };
+export type MediaMode = "image" | "video";
+export type TattoosRecognitionConfig = {
+    enabled: boolean;
+    mediaMode?: MediaMode;
+    minScore: number;
+    modelName: string;
+    modelType?: ModelType;
+    prompt: string;
+};
 export type SystemConfigMachineLearningDto = {
     clip: ClipConfig;
     enabled: boolean;
     facialRecognition: RecognitionConfig;
+    tattoosRecognition: TattoosRecognitionConfig;
     url: string;
 };
 export type SystemConfigMapDto = {
@@ -876,6 +887,16 @@ export type CreateTagDto = {
 };
 export type UpdateTagDto = {
     name?: string;
+};
+export type TattoosRecognizeItem = {
+    /** base-64 encoded image */
+    image: string;
+    prompt: string;
+    score: number;
+};
+export type TattoosRecognitionResponseDto = {
+    data: TattoosRecognizeItem[];
+    id: string;
 };
 export type CreateUserDto = {
     email: string;
@@ -2398,6 +2419,16 @@ export function tagAssets({ id, assetIdsDto }: {
         method: "PUT",
         body: assetIdsDto
     })));
+}
+export function getTattoosRecognize({ id }: {
+    id: string;
+}, opts?: Oazapfts.RequestOpts) {
+    return oazapfts.ok(oazapfts.fetchJson<{
+        status: 200;
+        data: TattoosRecognitionResponseDto;
+    }>(`/tattoos-recognize/${encodeURIComponent(id)}`, {
+        ...opts
+    }));
 }
 export function emptyTrash(opts?: Oazapfts.RequestOpts) {
     return oazapfts.ok(oazapfts.fetchText("/trash/empty", {

@@ -31,6 +31,11 @@ void main() {
       // TODO
     });
 
+    // TattoosRecognitionConfig tattoosRecognition
+    test('to test the property `tattoosRecognition`', () async {
+      // TODO
+    });
+
     // String url
     test('to test the property `url`', () async {
       // TODO

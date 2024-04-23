@@ -2301,6 +2301,20 @@ export type MapTheme = typeof MapTheme[keyof typeof MapTheme];
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const MediaMode = {
+    Image: 'image',
+    Video: 'video'
+} as const;
+
+export type MediaMode = typeof MediaMode[keyof typeof MediaMode];
+
+
+/**
+ * 
+ * @export
  * @interface MemoryLaneResponseDto
  */
 export interface MemoryLaneResponseDto {
@@ -2338,7 +2352,8 @@ export interface MergePersonDto {
 
 export const ModelType = {
     FacialRecognition: 'facial-recognition',
-    Clip: 'clip'
+    Clip: 'clip',
+    TattoosRecognition: 'tattoos-recognition'
 } as const;
 
 export type ModelType = typeof ModelType[keyof typeof ModelType];
@@ -3098,6 +3113,12 @@ export interface ServerFeaturesDto {
      * @memberof ServerFeaturesDto
      */
     'smartSearch': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ServerFeaturesDto
+     */
+    'tattoosRecognition': boolean;
     /**
      * 
      * @type {boolean}
@@ -3927,6 +3948,12 @@ export interface SystemConfigMachineLearningDto {
     'facialRecognition': RecognitionConfig;
     /**
      * 
+     * @type {TattoosRecognitionConfig}
+     * @memberof SystemConfigMachineLearningDto
+     */
+    'tattoosRecognition': TattoosRecognitionConfig;
+    /**
+     * 
      * @type {string}
      * @memberof SystemConfigMachineLearningDto
      */
@@ -4287,6 +4314,95 @@ export const TagTypeEnum = {
 export type TagTypeEnum = typeof TagTypeEnum[keyof typeof TagTypeEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface TattoosRecognitionConfig
+ */
+export interface TattoosRecognitionConfig {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TattoosRecognitionConfig
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {MediaMode}
+     * @memberof TattoosRecognitionConfig
+     */
+    'mediaMode'?: MediaMode;
+    /**
+     * 
+     * @type {number}
+     * @memberof TattoosRecognitionConfig
+     */
+    'minScore': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TattoosRecognitionConfig
+     */
+    'modelName': string;
+    /**
+     * 
+     * @type {ModelType}
+     * @memberof TattoosRecognitionConfig
+     */
+    'modelType'?: ModelType;
+    /**
+     * 
+     * @type {string}
+     * @memberof TattoosRecognitionConfig
+     */
+    'prompt': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface TattoosRecognitionResponseDto
+ */
+export interface TattoosRecognitionResponseDto {
+    /**
+     * 
+     * @type {Array<TattoosRecognizeItem>}
+     * @memberof TattoosRecognitionResponseDto
+     */
+    'data': Array<TattoosRecognizeItem>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TattoosRecognitionResponseDto
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface TattoosRecognizeItem
+ */
+export interface TattoosRecognizeItem {
+    /**
+     * base-64 encoded image
+     * @type {string}
+     * @memberof TattoosRecognizeItem
+     */
+    'image': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TattoosRecognizeItem
+     */
+    'prompt': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TattoosRecognizeItem
+     */
+    'score': number;
+}
 /**
  * 
  * @export
@@ -17441,6 +17557,133 @@ export class TagApi extends BaseAPI {
      */
     public updateTag(requestParameters: TagApiUpdateTagRequest, options?: RawAxiosRequestConfig) {
         return TagApiFp(this.configuration).updateTag(requestParameters.id, requestParameters.updateTagDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TattoosRecognizeApi - axios parameter creator
+ * @export
+ */
+export const TattoosRecognizeApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTattoosRecognize: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTattoosRecognize', 'id', id)
+            const localVarPath = `/tattoos-recognize/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication cookie required
+
+            // authentication api_key required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TattoosRecognizeApi - functional programming interface
+ * @export
+ */
+export const TattoosRecognizeApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TattoosRecognizeApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTattoosRecognize(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TattoosRecognitionResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTattoosRecognize(id, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['TattoosRecognizeApi.getTattoosRecognize']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TattoosRecognizeApi - factory interface
+ * @export
+ */
+export const TattoosRecognizeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TattoosRecognizeApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {TattoosRecognizeApiGetTattoosRecognizeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTattoosRecognize(requestParameters: TattoosRecognizeApiGetTattoosRecognizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TattoosRecognitionResponseDto> {
+            return localVarFp.getTattoosRecognize(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getTattoosRecognize operation in TattoosRecognizeApi.
+ * @export
+ * @interface TattoosRecognizeApiGetTattoosRecognizeRequest
+ */
+export interface TattoosRecognizeApiGetTattoosRecognizeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TattoosRecognizeApiGetTattoosRecognize
+     */
+    readonly id: string
+}
+
+/**
+ * TattoosRecognizeApi - object-oriented interface
+ * @export
+ * @class TattoosRecognizeApi
+ * @extends {BaseAPI}
+ */
+export class TattoosRecognizeApi extends BaseAPI {
+    /**
+     * 
+     * @param {TattoosRecognizeApiGetTattoosRecognizeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TattoosRecognizeApi
+     */
+    public getTattoosRecognize(requestParameters: TattoosRecognizeApiGetTattoosRecognizeRequest, options?: RawAxiosRequestConfig) {
+        return TattoosRecognizeApiFp(this.configuration).getTattoosRecognize(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

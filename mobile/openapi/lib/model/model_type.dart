@@ -25,11 +25,13 @@ class ModelType {
 
   static const facialRecognition = ModelType._(r'facial-recognition');
   static const clip = ModelType._(r'clip');
+  static const tattoosRecognition = ModelType._(r'tattoos-recognition');
 
   /// List of all possible values in this [enum][ModelType].
   static const values = <ModelType>[
     facialRecognition,
     clip,
+    tattoosRecognition,
   ];
 
   static ModelType? fromJson(dynamic value) => ModelTypeTypeTransformer().decode(value);
@@ -70,6 +72,7 @@ class ModelTypeTypeTransformer {
       switch (data) {
         case r'facial-recognition': return ModelType.facialRecognition;
         case r'clip': return ModelType.clip;
+        case r'tattoos-recognition': return ModelType.tattoosRecognition;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

@@ -193,6 +193,7 @@ Class | Method | HTTP request | Description
 *TagApi* | [**tagAssets**](doc//TagApi.md#tagassets) | **PUT** /tag/{id}/assets | 
 *TagApi* | [**untagAssets**](doc//TagApi.md#untagassets) | **DELETE** /tag/{id}/assets | 
 *TagApi* | [**updateTag**](doc//TagApi.md#updatetag) | **PATCH** /tag/{id} | 
+*TattoosRecognizeApi* | [**getTattoosRecognize**](doc//TattoosRecognizeApi.md#gettattoosrecognize) | **GET** /tattoos-recognize/{id} | 
 *TrashApi* | [**emptyTrash**](doc//TrashApi.md#emptytrash) | **POST** /trash/empty | 
 *TrashApi* | [**restoreAssets**](doc//TrashApi.md#restoreassets) | **POST** /trash/restore/assets | 
 *TrashApi* | [**restoreTrash**](doc//TrashApi.md#restoretrash) | **POST** /trash/restore | 
@@ -285,6 +286,7 @@ Class | Method | HTTP request | Description
  - [LogoutResponseDto](doc//LogoutResponseDto.md)
  - [MapMarkerResponseDto](doc//MapMarkerResponseDto.md)
  - [MapTheme](doc//MapTheme.md)
+ - [MediaMode](doc//MediaMode.md)
  - [MemoryLaneResponseDto](doc//MemoryLaneResponseDto.md)
  - [MergePersonDto](doc//MergePersonDto.md)
  - [ModelType](doc//ModelType.md)
@@ -348,6 +350,9 @@ Class | Method | HTTP request | Description
  - [SystemConfigTrashDto](doc//SystemConfigTrashDto.md)
  - [TagResponseDto](doc//TagResponseDto.md)
  - [TagTypeEnum](doc//TagTypeEnum.md)
+ - [TattoosRecognitionConfig](doc//TattoosRecognitionConfig.md)
+ - [TattoosRecognitionResponseDto](doc//TattoosRecognitionResponseDto.md)
+ - [TattoosRecognizeItem](doc//TattoosRecognizeItem.md)
  - [ThumbnailFormat](doc//ThumbnailFormat.md)
  - [TimeBucketResponseDto](doc//TimeBucketResponseDto.md)
  - [TimeBucketSize](doc//TimeBucketSize.md)

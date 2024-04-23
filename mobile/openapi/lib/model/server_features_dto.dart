@@ -23,6 +23,7 @@ class ServerFeaturesDto {
     required this.search,
     required this.sidecar,
     required this.smartSearch,
+    required this.tattoosRecognition,
     required this.trash,
   });
 
@@ -46,6 +47,8 @@ class ServerFeaturesDto {
 
   bool smartSearch;
 
+  bool tattoosRecognition;
+
   bool trash;
 
   @override
@@ -60,6 +63,7 @@ class ServerFeaturesDto {
     other.search == search &&
     other.sidecar == sidecar &&
     other.smartSearch == smartSearch &&
+    other.tattoosRecognition == tattoosRecognition &&
     other.trash == trash;
 
   @override
@@ -75,10 +79,11 @@ class ServerFeaturesDto {
     (search.hashCode) +
     (sidecar.hashCode) +
     (smartSearch.hashCode) +
+    (tattoosRecognition.hashCode) +
     (trash.hashCode);
 
   @override
-  String toString() => 'ServerFeaturesDto[configFile=$configFile, facialRecognition=$facialRecognition, map=$map, oauth=$oauth, oauthAutoLaunch=$oauthAutoLaunch, passwordLogin=$passwordLogin, reverseGeocoding=$reverseGeocoding, search=$search, sidecar=$sidecar, smartSearch=$smartSearch, trash=$trash]';
+  String toString() => 'ServerFeaturesDto[configFile=$configFile, facialRecognition=$facialRecognition, map=$map, oauth=$oauth, oauthAutoLaunch=$oauthAutoLaunch, passwordLogin=$passwordLogin, reverseGeocoding=$reverseGeocoding, search=$search, sidecar=$sidecar, smartSearch=$smartSearch, tattoosRecognition=$tattoosRecognition, trash=$trash]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -92,6 +97,7 @@ class ServerFeaturesDto {
       json[r'search'] = this.search;
       json[r'sidecar'] = this.sidecar;
       json[r'smartSearch'] = this.smartSearch;
+      json[r'tattoosRecognition'] = this.tattoosRecognition;
       json[r'trash'] = this.trash;
     return json;
   }
@@ -114,6 +120,7 @@ class ServerFeaturesDto {
         search: mapValueOfType<bool>(json, r'search')!,
         sidecar: mapValueOfType<bool>(json, r'sidecar')!,
         smartSearch: mapValueOfType<bool>(json, r'smartSearch')!,
+        tattoosRecognition: mapValueOfType<bool>(json, r'tattoosRecognition')!,
         trash: mapValueOfType<bool>(json, r'trash')!,
       );
     }
@@ -172,6 +179,7 @@ class ServerFeaturesDto {
     'search',
     'sidecar',
     'smartSearch',
+    'tattoosRecognition',
     'trash',
   };
 }

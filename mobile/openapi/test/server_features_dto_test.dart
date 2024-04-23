@@ -66,6 +66,11 @@ void main() {
       // TODO
     });
 
+    // bool tattoosRecognition
+    test('to test the property `tattoosRecognition`', () async {
+      // TODO
+    });
+
     // bool trash
     test('to test the property `trash`', () async {
       // TODO

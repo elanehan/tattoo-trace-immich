@@ -16,6 +16,7 @@ class SystemConfigMachineLearningDto {
     required this.clip,
     required this.enabled,
     required this.facialRecognition,
+    required this.tattoosRecognition,
     required this.url,
   });
 
@@ -25,6 +26,8 @@ class SystemConfigMachineLearningDto {
 
   RecognitionConfig facialRecognition;
 
+  TattoosRecognitionConfig tattoosRecognition;
+
   String url;
 
   @override
@@ -32,6 +35,7 @@ class SystemConfigMachineLearningDto {
     other.clip == clip &&
     other.enabled == enabled &&
     other.facialRecognition == facialRecognition &&
+    other.tattoosRecognition == tattoosRecognition &&
     other.url == url;
 
   @override
@@ -40,16 +44,18 @@ class SystemConfigMachineLearningDto {
     (clip.hashCode) +
     (enabled.hashCode) +
     (facialRecognition.hashCode) +
+    (tattoosRecognition.hashCode) +
     (url.hashCode);
 
   @override
-  String toString() => 'SystemConfigMachineLearningDto[clip=$clip, enabled=$enabled, facialRecognition=$facialRecognition, url=$url]';
+  String toString() => 'SystemConfigMachineLearningDto[clip=$clip, enabled=$enabled, facialRecognition=$facialRecognition, tattoosRecognition=$tattoosRecognition, url=$url]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
       json[r'clip'] = this.clip;
       json[r'enabled'] = this.enabled;
       json[r'facialRecognition'] = this.facialRecognition;
+      json[r'tattoosRecognition'] = this.tattoosRecognition;
       json[r'url'] = this.url;
     return json;
   }
@@ -65,6 +71,7 @@ class SystemConfigMachineLearningDto {
         clip: CLIPConfig.fromJson(json[r'clip'])!,
         enabled: mapValueOfType<bool>(json, r'enabled')!,
         facialRecognition: RecognitionConfig.fromJson(json[r'facialRecognition'])!,
+        tattoosRecognition: TattoosRecognitionConfig.fromJson(json[r'tattoosRecognition'])!,
         url: mapValueOfType<String>(json, r'url')!,
       );
     }
@@ -116,6 +123,7 @@ class SystemConfigMachineLearningDto {
     'clip',
     'enabled',
     'facialRecognition',
+    'tattoosRecognition',
     'url',
   };
 }
