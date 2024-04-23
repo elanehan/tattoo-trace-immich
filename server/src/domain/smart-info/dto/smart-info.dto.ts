@@ -13,7 +13,7 @@ export class TattoosRecognitionResponseDto {
   }
 
 export class TattoosRecognizeItem {
-    @ApiProperty({ type: 'base-64 encoded image' })
+    @ApiProperty({ type: 'string', description: 'base-64 encoded image' })
     image!: string;
     @ApiProperty({ type: 'number' })
     score!: number;
