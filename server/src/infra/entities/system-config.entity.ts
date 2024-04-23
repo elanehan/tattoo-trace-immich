@@ -69,6 +69,11 @@ export enum SystemConfigKey {
   MACHINE_LEARNING_FACIAL_RECOGNITION_MAX_DISTANCE = 'machineLearning.facialRecognition.maxDistance',
   MACHINE_LEARNING_FACIAL_RECOGNITION_MIN_FACES = 'machineLearning.facialRecognition.minFaces',
 
+  MACHINE_LEARNING_TATTOOS_RECOGNITION_ENABLED = 'machineLearning.tattoosRecognition.enabled',
+  MACHINE_LEARNING_TATTOOS_RECOGNITION_MODEL_NAME = 'machineLearning.tattoosRecognition.modelName',
+  MACHINE_LEARNING_TATTOOS_RECOGNITION_MIN_SCORE = 'machineLearning.tattoosRecognition.minScore',
+  MACHINE_LEARNING_TATTOOS_RECOGNITION_PROMPT = 'machineLearning.tattoosRecognition.prompt',
+
   MAP_ENABLED = 'map.enabled',
   MAP_LIGHT_STYLE = 'map.lightStyle',
   MAP_DARK_STYLE = 'map.darkStyle',
@@ -206,6 +211,12 @@ export interface SystemConfig {
       minScore: number;
       minFaces: number;
       maxDistance: number;
+    };
+    tattoosRecognition: {
+      enabled: boolean;
+      modelName: string;
+      minScore: number;
+      prompt: string;
     };
   };
   map: {

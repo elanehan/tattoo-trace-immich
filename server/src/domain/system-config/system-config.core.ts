@@ -53,6 +53,7 @@ export const defaults = Object.freeze<SystemConfig>({
     [QueueName.SMART_SEARCH]: { concurrency: 2 },
     [QueueName.METADATA_EXTRACTION]: { concurrency: 5 },
     [QueueName.FACE_DETECTION]: { concurrency: 2 },
+    [QueueName.TATTOOS_RECOGNITION]: { concurrency: 1},
     [QueueName.SEARCH]: { concurrency: 5 },
     [QueueName.SIDECAR]: { concurrency: 5 },
     [QueueName.LIBRARY]: { concurrency: 5 },
@@ -77,6 +78,12 @@ export const defaults = Object.freeze<SystemConfig>({
       minScore: 0.7,
       maxDistance: 0.6,
       minFaces: 3,
+    },
+    tattoosRecognition: {
+      enabled: true,
+      modelName: 'tattoos_trace',
+      minScore: 0.3,
+      prompt: '',
     },
   },
   map: {
@@ -145,6 +152,7 @@ export const defaults = Object.freeze<SystemConfig>({
 export enum FeatureFlag {
   SMART_SEARCH = 'smartSearch',
   FACIAL_RECOGNITION = 'facialRecognition',
+  TATTOOS_RECOGNITION = 'tattoosRecognition',
   MAP = 'map',
   REVERSE_GEOCODING = 'reverseGeocoding',
   SIDECAR = 'sidecar',
@@ -191,6 +199,9 @@ export class SystemConfigCore {
         case FeatureFlag.FACIAL_RECOGNITION: {
           throw new BadRequestException('Facial recognition is not enabled');
         }
+        case FeatureFlag.TATTOOS_RECOGNITION: {
+          throw new BadRequestException('Tattoos recognition is not enabled');
+        }
         case FeatureFlag.SIDECAR: {
           throw new BadRequestException('Sidecar is not enabled');
         }
@@ -225,6 +236,7 @@ export class SystemConfigCore {
     return {
       [FeatureFlag.SMART_SEARCH]: mlEnabled && config.machineLearning.clip.enabled,
       [FeatureFlag.FACIAL_RECOGNITION]: mlEnabled && config.machineLearning.facialRecognition.enabled,
+      [FeatureFlag.TATTOOS_RECOGNITION]: mlEnabled && config.machineLearning.tattoosRecognition.enabled,
       [FeatureFlag.MAP]: config.map.enabled,
       [FeatureFlag.REVERSE_GEOCODING]: config.reverseGeocoding.enabled,
       [FeatureFlag.SIDECAR]: true,
