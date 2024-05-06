@@ -27,7 +27,7 @@ export interface DetectFaceResult {
 }
 
 // Define the structure of the result of the detectTattoo model
-// Our model returns images with tattoos, confidence scores, and prompts
+// Our model returns images with tattoos, confidence scores
 export interface RecognizeTattoosResult {
   image: string; // base-64 encoded image
   score: number;

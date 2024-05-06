@@ -72,7 +72,6 @@ export enum SystemConfigKey {
   MACHINE_LEARNING_TATTOOS_RECOGNITION_ENABLED = 'machineLearning.tattoosRecognition.enabled',
   MACHINE_LEARNING_TATTOOS_RECOGNITION_MODEL_NAME = 'machineLearning.tattoosRecognition.modelName',
   MACHINE_LEARNING_TATTOOS_RECOGNITION_MIN_SCORE = 'machineLearning.tattoosRecognition.minScore',
-  MACHINE_LEARNING_TATTOOS_RECOGNITION_PROMPT = 'machineLearning.tattoosRecognition.prompt',
 
   MAP_ENABLED = 'map.enabled',
   MAP_LIGHT_STYLE = 'map.lightStyle',
@@ -216,7 +215,6 @@ export interface SystemConfig {
       enabled: boolean;
       modelName: string;
       minScore: number;
-      prompt: string;
     };
   };
   map: {

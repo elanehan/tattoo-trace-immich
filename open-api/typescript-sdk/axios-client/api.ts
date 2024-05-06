@@ -4350,12 +4350,6 @@ export interface TattoosRecognitionConfig {
      * @memberof TattoosRecognitionConfig
      */
     'modelType'?: ModelType;
-    /**
-     * 
-     * @type {string}
-     * @memberof TattoosRecognitionConfig
-     */
-    'prompt': string;
 }
 
 

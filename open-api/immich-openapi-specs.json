@@ -9628,16 +9628,12 @@
           },
           "modelType": {
             "$ref": "#/components/schemas/ModelType"
-          },
-          "prompt": {
-            "type": "string"
           }
         },
         "required": [
           "enabled",
           "minScore",
-          "modelName",
-          "prompt"
+          "modelName"
         ],
         "type": "object"
       },

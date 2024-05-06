@@ -18,7 +18,6 @@ class TattoosRecognitionConfig {
     required this.minScore,
     required this.modelName,
     this.modelType,
-    required this.prompt,
   });
 
   bool enabled;
@@ -43,16 +42,13 @@ class TattoosRecognitionConfig {
   ///
   ModelType? modelType;
 
-  String prompt;
-
   @override
   bool operator ==(Object other) => identical(this, other) || other is TattoosRecognitionConfig &&
     other.enabled == enabled &&
     other.mediaMode == mediaMode &&
     other.minScore == minScore &&
     other.modelName == modelName &&
-    other.modelType == modelType &&
-    other.prompt == prompt;
+    other.modelType == modelType;
 
   @override
   int get hashCode =>
@@ -61,11 +57,10 @@ class TattoosRecognitionConfig {
     (mediaMode == null ? 0 : mediaMode!.hashCode) +
     (minScore.hashCode) +
     (modelName.hashCode) +
-    (modelType == null ? 0 : modelType!.hashCode) +
-    (prompt.hashCode);
+    (modelType == null ? 0 : modelType!.hashCode);
 
   @override
-  String toString() => 'TattoosRecognitionConfig[enabled=$enabled, mediaMode=$mediaMode, minScore=$minScore, modelName=$modelName, modelType=$modelType, prompt=$prompt]';
+  String toString() => 'TattoosRecognitionConfig[enabled=$enabled, mediaMode=$mediaMode, minScore=$minScore, modelName=$modelName, modelType=$modelType]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -82,7 +77,6 @@ class TattoosRecognitionConfig {
     } else {
     //  json[r'modelType'] = null;
     }
-      json[r'prompt'] = this.prompt;
     return json;
   }
 
@@ -99,7 +93,6 @@ class TattoosRecognitionConfig {
         minScore: mapValueOfType<double>(json, r'minScore')!,
         modelName: mapValueOfType<String>(json, r'modelName')!,
         modelType: ModelType.fromJson(json[r'modelType']),
-        prompt: mapValueOfType<String>(json, r'prompt')!,
       );
     }
     return null;
@@ -150,7 +143,6 @@ class TattoosRecognitionConfig {
     'enabled',
     'minScore',
     'modelName',
-    'prompt',
   };
 }
 

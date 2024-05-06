@@ -793,7 +793,6 @@ export type TattoosRecognitionConfig = {
     minScore: number;
     modelName: string;
     modelType?: ModelType;
-    prompt: string;
 };
 export type SystemConfigMachineLearningDto = {
     clip: ClipConfig;

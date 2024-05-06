@@ -81,8 +81,7 @@ export const defaults = Object.freeze<SystemConfig>({
     tattoosRecognition: {
       enabled: true,
       modelName: 'tattoos_trace',
-      minScore: 0.3,
-      prompt: '',
+      minScore: 0.3
     },
   },
   map: {

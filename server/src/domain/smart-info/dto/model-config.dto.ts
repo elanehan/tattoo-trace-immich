@@ -60,9 +60,4 @@ export class TattoosRecognitionConfig extends ModelConfig {
   @Optional()
   @ApiProperty({ enumName: 'MediaMode', enum: MediaMode }) // Define the structure of the mediaMode field
   mediaMode?: MediaMode; // The type of media the model will be applied to
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  prompt!: string; // The prompt model returns when a tattoo is detected
 }
