@@ -9666,16 +9666,12 @@
             "description": "base-64 encoded image",
             "type": "string"
           },
-          "prompt": {
-            "type": "string"
-          },
           "score": {
             "type": "number"
           }
         },
         "required": [
           "image",
-          "prompt",
           "score"
         ],
         "type": "object"

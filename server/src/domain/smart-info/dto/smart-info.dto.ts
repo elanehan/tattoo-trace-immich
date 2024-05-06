@@ -17,6 +17,4 @@ export class TattoosRecognizeItem {
     image!: string;
     @ApiProperty({ type: 'number' })
     score!: number;
-    @ApiProperty({ type: 'string' })
-    prompt!: string;
 }

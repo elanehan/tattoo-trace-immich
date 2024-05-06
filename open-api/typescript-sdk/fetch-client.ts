@@ -891,7 +891,6 @@ export type UpdateTagDto = {
 export type TattoosRecognizeItem = {
     /** base-64 encoded image */
     image: string;
-    prompt: string;
     score: number;
 };
 export type TattoosRecognitionResponseDto = {

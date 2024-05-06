@@ -22,11 +22,6 @@ void main() {
       // TODO
     });
 
-    // String prompt
-    test('to test the property `prompt`', () async {
-      // TODO
-    });
-
     // num score
     test('to test the property `score`', () async {
       // TODO

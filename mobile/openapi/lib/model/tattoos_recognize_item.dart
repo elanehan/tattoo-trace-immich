@@ -14,37 +14,31 @@ class TattoosRecognizeItem {
   /// Returns a new [TattoosRecognizeItem] instance.
   TattoosRecognizeItem({
     required this.image,
-    required this.prompt,
     required this.score,
   });
 
   /// base-64 encoded image
   String image;
 
-  String prompt;
-
   num score;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is TattoosRecognizeItem &&
     other.image == image &&
-    other.prompt == prompt &&
     other.score == score;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (image.hashCode) +
-    (prompt.hashCode) +
     (score.hashCode);
 
   @override
-  String toString() => 'TattoosRecognizeItem[image=$image, prompt=$prompt, score=$score]';
+  String toString() => 'TattoosRecognizeItem[image=$image, score=$score]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
       json[r'image'] = this.image;
-      json[r'prompt'] = this.prompt;
       json[r'score'] = this.score;
     return json;
   }
@@ -58,7 +52,6 @@ class TattoosRecognizeItem {
 
       return TattoosRecognizeItem(
         image: mapValueOfType<String>(json, r'image')!,
-        prompt: mapValueOfType<String>(json, r'prompt')!,
         score: num.parse('${json[r'score']}'),
       );
     }
@@ -108,7 +101,6 @@ class TattoosRecognizeItem {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'image',
-    'prompt',
     'score',
   };
 }

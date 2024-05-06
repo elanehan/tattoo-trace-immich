@@ -4392,12 +4392,6 @@ export interface TattoosRecognizeItem {
     'image': string;
     /**
      * 
-     * @type {string}
-     * @memberof TattoosRecognizeItem
-     */
-    'prompt': string;
-    /**
-     * 
      * @type {number}
      * @memberof TattoosRecognizeItem
      */

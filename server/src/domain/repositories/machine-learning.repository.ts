@@ -31,7 +31,6 @@ export interface DetectFaceResult {
 export interface RecognizeTattoosResult {
   image: string; // base-64 encoded image
   score: number;
-  prompt: string;
 }
 
 export enum ModelType {

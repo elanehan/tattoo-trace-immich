@@ -132,7 +132,6 @@ export class SmartInfoService {
       data: recognizedTattoos.map((tattoo) => ({
         image: tattoo.image,
         score: tattoo.score,
-        prompt: tattoo.prompt,
       })),
     };
 
