@@ -1,3 +1,4 @@
+from io import BytesIO
 from pathlib import Path
 from typing import Any
 
@@ -69,49 +70,56 @@ class TattoosRecognition(InferenceModel):
 
 
 class TattooDetector:
-    def __init__(self, model_path=None):
-        if model_path:
-            self.initialize_model(model_path)
-        else:
-            model_path = './app/models/weight/best.pt'
-            self.initialize_model(model_path)
+    def __init__(self):
+        #model_path = './app/models/best.pt'
+        model_path = './yolov5m.pt'
+        self.initialize_model(model_path)
 
 
-    def run_prediction_image(self, image, confidence=0.15):
-        #model(source=1, show=True, conf=0.4, save=True)
-        prediction_result = self.model(image, conf=confidence)
+    def run_prediction_image(self, image):
+        prediction_result = self.model(image)
         return prediction_result 
     
 
     def run_image_prediction_byte_stream(self, image, asset_id, save_directory, confidence):
         file_path = save_directory / f"{asset_id}.jpg"
         recognition_made = False
-    
+
         if file_path.exists():
             tattoo_recognition_res = {
                 "filePath": str(file_path)
             }
-            
         else:
             if isinstance(image, bytes):
                 image = cv2.imdecode(np.frombuffer(image, np.uint8), cv2.IMREAD_COLOR)
-                recognition_result = self.run_prediction_image(image, confidence)[0]
-                recognition_made = bool(len(recognition_result))
-                recognized_image = recognition_result.plot()
+                recognition_result = self.run_prediction_image(image)
+                print(recognition_result)
+                recognition_result.render()  # Update images with bounding boxes and labels
+                recognition_made = bool(len(recognition_result.xyxy[0]))  # Check if any detections were made
+
+                # Convert the last image to base64 format
+                buffered = BytesIO()
+                im_rgb = cv2.cvtColor(recognition_result.ims[-1], cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+                im_base64 = Image.fromarray(im_rgb)
+                im_base64.save(buffered, format="JPEG")
+                recognized_image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
+
+                # Decode the base64 image back into a numpy array
+                recognized_image = cv2.imdecode(np.fromstring(base64.b64decode(recognized_image_base64), dtype=np.uint8), cv2.IMREAD_COLOR)
             else:
                 recognized_image = image
 
             if asset_id and recognition_made:
                 cv2.imwrite(str(file_path), recognized_image)
-            
+
                 tattoo_recognition_res = {
-                        "filePath": str(file_path)
-                    }
+                    "filePath": str(file_path)
+                }
             else:
                 tattoo_recognition_res = {
-                        "filePath": ""
-                    }
-        
+                    "filePath": ""
+                }
+
         return tattoo_recognition_res
 
 
@@ -185,3 +193,4 @@ class TattooDetector:
 
     def initialize_model(self, model_path):
         self.model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
+

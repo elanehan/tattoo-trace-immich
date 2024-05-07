@@ -31,9 +31,11 @@ RUN poetry config installer.max-workers 10 && \
     poetry config virtualenvs.create false
 RUN python3 -m venv /opt/venv
 
+COPY requirements.txt ./
 COPY poetry.lock pyproject.toml ./
 RUN poetry install --sync --no-interaction --no-ansi --no-root --with ${DEVICE} --without dev
 
+RUN pip install -r requirements.txt
 RUN pip install ultralytics
 RUN pip install opencv-python-headless==4.8.1.78
 

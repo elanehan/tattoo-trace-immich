@@ -2,7 +2,7 @@
   import {api } from '@api';
   import { createEventDispatcher, onMount } from 'svelte';
   import BaseModal from './base-modal.svelte';
-  import WeaponsListItem from '../asset-viewer/tattoos-list-item.svelte';
+  import TattoosListItem from '../asset-viewer/tattoos-list-item.svelte';
   import { handleError } from '$lib/utils/handle-error';
 
   let tattooFilePath: string = '';
@@ -17,7 +17,7 @@
   onMount(async () => {
     
     try {
-      const { data } = await api.tattoosRecognizeApi.getWeaponsDetect({ id: assetId });
+      const { data } = await api.tattoosRecognizeApi.getTattoosRecognize({ id: assetId });
       tattooFilePath = data.filePath;
       mediaMode = data.mediaMode;
     } catch (error) {
@@ -65,7 +65,7 @@
           <div class="flex gap-4 px-6 py-2">
             <div class="h-full w-full shrink-0 bg-slate-300">
           <!-- {#each weapons as weapon (weapon.image)} -->
-              <WeaponsListItem assetId={assetId} tattooFilePath={tattooFilePath} mediaMode={mediaMode} />
+              <TattoosListItem assetId={assetId} tattooFilePath={tattooFilePath} mediaMode={mediaMode} />
           <!-- {/each} -->
             </div>
           </div>
