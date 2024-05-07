@@ -71,8 +71,8 @@ class TattoosRecognition(InferenceModel):
 
 class TattooDetector:
     def __init__(self):
-        #model_path = './app/models/best.pt'
-        model_path = './yolov5m.pt'
+        model_path = './app/models/best.pt'
+        #model_path = './yolov5m.pt'
         self.initialize_model(model_path)
 
 
@@ -192,5 +192,5 @@ class TattooDetector:
          
 
     def initialize_model(self, model_path):
-        self.model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
+        self.model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, force_reload=True)
 
