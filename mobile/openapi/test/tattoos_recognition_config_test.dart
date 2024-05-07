@@ -21,13 +21,13 @@ void main() {
       // TODO
     });
 
-    // MediaMode mediaMode
-    test('to test the property `mediaMode`', () async {
+    // double minScore
+    test('to test the property `minScore`', () async {
       // TODO
     });
 
-    // double minScore
-    test('to test the property `minScore`', () async {
+    // MediaMode mode
+    test('to test the property `mode`', () async {
       // TODO
     });
 

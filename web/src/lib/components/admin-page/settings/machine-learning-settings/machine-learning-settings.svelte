@@ -144,6 +144,50 @@
         </div>
       </SettingAccordion>
 
+      <SettingAccordion
+        key="tattoos-recognition"
+        title="Tattoos Recognition"
+        subtitle="Recognize pontential tattoos in images"
+      >
+        <div class="ml-4 mt-4 flex flex-col gap-4">
+          <SettingSwitch
+            title="ENABLED"
+            subtitle="If disabled, images and videos will not have the option to be scanned for tattoos."
+            bind:checked={config.machineLearning.tattoosRecognition.enabled}
+            disabled={disabled || !config.machineLearning.enabled}
+          />
+
+          <hr />
+
+          <SettingSelect
+            label="TATTOOS RECOGNITION MODEL"
+            desc="Current models available for tattoos recognition."
+            name="tattoos-recognition-model"
+            bind:value={config.machineLearning.tattoosRecognition.modelName}
+            options={[
+              { value: 'yoloV5', text: 'yoloV5' },
+            ]}
+            disabled={disabled || !config.machineLearning.enabled || !config.machineLearning.tattoosRecognition.enabled}
+            isEdited={config.machineLearning.tattoosRecognition.modelName !==
+              savedConfig.machineLearning.tattoosRecognition.modelName}
+          />
+
+          <SettingInputField
+            inputType={SettingInputFieldType.NUMBER}
+            label="MIN DETECTION SCORE"
+            desc="Minimum confidence score for a tattoo to be detected from 0-1. Lower values will detect more tattoos but may result in false positives."
+            bind:value={config.machineLearning.tattoosRecognition.minScore}
+            step="0.1"
+            min="0"
+            max="1"
+            disabled={disabled || !config.machineLearning.enabled || !config.machineLearning.tattoosRecognition.enabled}
+            isEdited={config.machineLearning.tattoosRecognition.minScore !==
+              savedConfig.machineLearning.tattoosRecognition.minScore}
+          />
+
+        </div>
+      </SettingAccordion>
+
       <SettingButtonsRow
         on:reset={({ detail }) => dispatch('reset', { ...detail, configKeys: ['machineLearning'] })}
         on:save={() => dispatch('save', { machineLearning: config.machineLearning })}

@@ -4,6 +4,9 @@ import os
 import signal
 import threading
 import time
+import cv2
+import numpy as np
+import base64
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Callable, Iterator
@@ -23,6 +26,7 @@ from .schemas import (
     MessageResponse,
     ModelType,
     TextResponse,
+    RecognizedTattoos
 )
 
 MultiPartParser.max_file_size = 2**26  # spools to disk if payload is 64 MiB or larger
@@ -32,6 +36,11 @@ thread_pool: ThreadPoolExecutor | None = None
 lock = threading.Lock()
 active_requests = 0
 last_called: float | None = None
+
+### -- test code
+from .models.tattoos_recognition import TattooDetector
+tattoo_detector = TattooDetector('./app/models/weight/best.pt')
+
 
 
 @asynccontextmanager
@@ -102,6 +111,15 @@ async def predict(
         kwargs = orjson.loads(options)
     except orjson.JSONDecodeError:
         raise HTTPException(400, f"Invalid options JSON: {options}")
+
+    if model_type == ModelType.TATTOOS_RECOGNITION:    
+        image = inputs
+        recognition_response = tattoo_detector.run_image_prediction_byte_stream(image)
+        return ORJSONResponse(recognition_response)
+
+    model = await load(await model_cache.get(model_name, model_type, **kwargs))
+    model.configure(**kwargs)
+    outputs = await run(model.predict, inputs)
 
     model = await load(await model_cache.get(model_name, model_type, **kwargs))
     model.configure(**kwargs)

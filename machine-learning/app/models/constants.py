@@ -50,6 +50,9 @@ _INSIGHTFACE_MODELS = {
     "buffalo_s",
 }
 
+_TATTOOS_RECOGNITION_MODELS = {
+    "yoloV5",
+}
 
 SUPPORTED_PROVIDERS = ["CUDAExecutionProvider", "OpenVINOExecutionProvider", "CPUExecutionProvider"]
 
@@ -67,3 +70,6 @@ def is_mclip(model_name: str) -> bool:
 
 def is_insightface(model_name: str) -> bool:
     return clean_name(model_name) in _INSIGHTFACE_MODELS
+
+def is_tattoos_recognition(model_name: str) -> bool:
+    return clean_name(model_name) in _TATTOOS_RECOGNITION_MODELS

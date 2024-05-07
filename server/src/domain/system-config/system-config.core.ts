@@ -80,7 +80,7 @@ export const defaults = Object.freeze<SystemConfig>({
     },
     tattoosRecognition: {
       enabled: true,
-      modelName: 'tattoos_trace',
+      modelName: 'yoloV5',
       minScore: 0.3
     },
   },

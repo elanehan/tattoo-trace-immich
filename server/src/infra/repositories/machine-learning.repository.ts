@@ -8,7 +8,6 @@ import {
   ModelType,
   RecognitionConfig,
   TattoosRecognitionConfig,
-  MediaMode,
   TextModelInput,
   VisionModelInput,
 } from '@app/domain';

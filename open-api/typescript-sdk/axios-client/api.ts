@@ -4328,16 +4328,16 @@ export interface TattoosRecognitionConfig {
     'enabled': boolean;
     /**
      * 
-     * @type {MediaMode}
-     * @memberof TattoosRecognitionConfig
-     */
-    'mediaMode'?: MediaMode;
-    /**
-     * 
      * @type {number}
      * @memberof TattoosRecognitionConfig
      */
     'minScore': number;
+    /**
+     * 
+     * @type {MediaMode}
+     * @memberof TattoosRecognitionConfig
+     */
+    'mode'?: MediaMode;
     /**
      * 
      * @type {string}

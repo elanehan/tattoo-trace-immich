@@ -59,5 +59,5 @@ export class TattoosRecognitionConfig extends ModelConfig {
   @IsEnum(MediaMode)
   @Optional()
   @ApiProperty({ enumName: 'MediaMode', enum: MediaMode }) // Define the structure of the mediaMode field
-  mediaMode?: MediaMode; // The type of media the model will be applied to
+  mode?: MediaMode; // The type of media the model will be applied to
 }

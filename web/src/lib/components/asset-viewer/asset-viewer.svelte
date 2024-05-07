@@ -13,6 +13,7 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import AlbumSelectionModal from '../shared-components/album-selection-modal.svelte';
+  import TattoosRecognitionWindow from '../shared-components/tattoos-recognition-window.svelte';
   import { notificationController, NotificationType } from '../shared-components/notification/notification';
   import AssetViewerNavBar from './asset-viewer-nav-bar.svelte';
   import DetailPanel from './detail-panel.svelte';
@@ -73,6 +74,7 @@
   let isShowAlbumPicker = false;
   let isShowDeleteConfirmation = false;
   let addToSharedAlbum = true;
+  let isShowTattoosRecognize = false;
   let shouldPlayMotionPhoto = false;
   let isShowProfileImageCrop = false;
   let shouldShowDownloadButton = sharedLink ? sharedLink.allowDownload : !asset.isOffline;
@@ -84,8 +86,7 @@
   let isShowActivity = false;
   let isLiked: ActivityResponseDto | null = null;
   let numberOfComments: number;
-  let isShowTattoosRecognize = false;
-  let shouldShowTattoosRecognitionButton = asset.type === AssetTypeEnum.Image || asset.type === AssetTypeEnum.Video;
+  let shouldShowTattoosRecognitionButton = true;
   $: {
     if (asset.stackCount && asset.stack) {
       $stackAssetsStore = asset.stack;
@@ -601,7 +602,7 @@
         on:runJob={({ detail: job }) => handleRunJob(job)}
         on:playSlideShow={() => ($slideshowState = SlideshowState.PlaySlideshow)}
         on:unstack={handleUnstack}
-        on:searchTattoos={() => recognizeTattoos(asset)}
+        on:searchTattoos={() => recognizeTattoos()}
       />
     </div>
   {/if}
@@ -776,6 +777,13 @@
       on:album={({ detail }) => handleAddToAlbum(detail)}
       on:close={() => (isShowAlbumPicker = false)}
     />
+  {/if}
+
+  {#if isShowTattoosRecognize}
+  <TattoosRecognitionWindow
+    assetId={asset.id}
+    on:close={() => (isShowTattoosRecognize = false)}
+  />
   {/if}
 
   {#if isShowDeleteConfirmation}

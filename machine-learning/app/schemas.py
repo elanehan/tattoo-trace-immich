@@ -31,6 +31,7 @@ class BoundingBox(TypedDict):
 class ModelType(StrEnum):
     CLIP = "clip"
     FACIAL_RECOGNITION = "facial-recognition"
+    TATTOOS_RECOGNITION = "tattoos-recognition"
 
 
 class ModelRuntime(StrEnum):
@@ -49,6 +50,9 @@ class Face(TypedDict):
     imageHeight: int
     score: float
 
+class RecognizedTattoos(TypedDict):
+    image: str
+    score: float
 
 def has_profiling(obj: Any) -> TypeGuard[HasProfiling]:
     return hasattr(obj, "profiling") and isinstance(obj.profiling, dict)

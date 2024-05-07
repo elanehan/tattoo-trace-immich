@@ -789,8 +789,8 @@ export type RecognitionConfig = {
 export type MediaMode = "image" | "video";
 export type TattoosRecognitionConfig = {
     enabled: boolean;
-    mediaMode?: MediaMode;
     minScore: number;
+    mode?: MediaMode;
     modelName: string;
     modelType?: ModelType;
 };

@@ -4,8 +4,9 @@ from app.schemas import ModelType
 
 from .base import InferenceModel
 from .clip import MCLIPEncoder, OpenCLIPEncoder
-from .constants import is_insightface, is_mclip, is_openclip
+from .constants import is_insightface, is_mclip, is_openclip, is_tattoos_recognition
 from .facial_recognition import FaceRecognizer
+from .tattoos_recognition import TattoosRecognition
 
 
 def from_model_type(model_type: ModelType, model_name: str, **model_kwargs: Any) -> InferenceModel:
@@ -18,6 +19,9 @@ def from_model_type(model_type: ModelType, model_name: str, **model_kwargs: Any)
         case ModelType.FACIAL_RECOGNITION:
             if is_insightface(model_name):
                 return FaceRecognizer(model_name, **model_kwargs)
+        case ModelType.TATTOOS_RECOGNITION:
+            if is_tattoos_recognition(model_name):
+                return TattoosRecognition(model_name, **model_kwargs)
         case _:
             raise ValueError(f"Unknown model type {model_type}")
 

@@ -12,11 +12,13 @@ import {
   ISmartInfoRepository,
   ISystemConfigRepository,
   WithoutProperty,
+  MediaMode,
 } from '../repositories';
 import { SystemConfigCore } from '../system-config';
 import { AccessCore, Permission } from '../access';
 import { AuthDto } from '../auth';
 import { TattoosRecognitionResponseDto } from './dto/smart-info.dto';
+import { AssetType } from '@app/infra/entities';
 
 @Injectable()
 export class SmartInfoService {
@@ -120,12 +122,10 @@ export class SmartInfoService {
     const recognizedTattoos = await this.machineLearning.recognizeTattoos(
       machineLearning.url,
       { imagePath: asset.resizePath },
-      machineLearning.tattoosRecognition,
+      { ...machineLearning.tattoosRecognition,
+        mode: asset.type === AssetType.VIDEO ? MediaMode.VIDEO : MediaMode.IMAGE
+      },
     );
-
-    if (recognizedTattoos.length === 0) {
-      throw new BadRequestException('No tattoos response returned');
-    }
 
     const response = {
       id: id,

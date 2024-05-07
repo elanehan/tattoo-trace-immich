@@ -9,8 +9,8 @@ import 'package:openapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **bool** |  | 
-**mediaMode** | [**MediaMode**](MediaMode.md) |  | [optional] 
 **minScore** | **double** |  | 
+**mode** | [**MediaMode**](MediaMode.md) |  | [optional] 
 **modelName** | **String** |  | 
 **modelType** | [**ModelType**](ModelType.md) |  | [optional] 
 

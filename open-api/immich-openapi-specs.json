@@ -9616,12 +9616,12 @@
           "enabled": {
             "type": "boolean"
           },
-          "mediaMode": {
-            "$ref": "#/components/schemas/MediaMode"
-          },
           "minScore": {
             "format": "float",
             "type": "number"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/MediaMode"
           },
           "modelName": {
             "type": "string"
