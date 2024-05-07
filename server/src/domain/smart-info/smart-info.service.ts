@@ -19,6 +19,7 @@ import { AccessCore, Permission } from '../access';
 import { AuthDto } from '../auth';
 import { TattoosRecognitionResponseDto } from './dto/smart-info.dto';
 import { AssetType } from '@app/infra/entities';
+import e from 'express';
 
 @Injectable()
 export class SmartInfoService {
@@ -102,6 +103,9 @@ export class SmartInfoService {
   }
 
   async handleRecognizeTattoos(auth: AuthDto, id: string): Promise<TattoosRecognitionResponseDto> {
+
+    let response: TattoosRecognitionResponseDto = {id: id, filePath: '', mediaMode: MediaMode.IMAGE};
+
     await this.access.requirePermission(auth, Permission.ASSET_READ, id);
 
     const { machineLearning } = await this.configCore.getConfig();
@@ -114,26 +118,59 @@ export class SmartInfoService {
     if (!asset) {
       throw new BadRequestException('Asset not found');
     }
-
-    if (!asset.resizePath) {
-      throw new BadRequestException('Asset has no image file path');
+    //if the asset doesn't have a resize path or original path, it can't be processed
+    if (!asset.resizePath && !asset.originalPath) {
+      throw new BadRequestException('Asset has no image or video file path');
     }
+    // if (!asset.resizePath) {
+    //   throw new BadRequestException('Asset has no image file path');
+    // }
 
-    const recognizedTattoos = await this.machineLearning.recognizeTattoos(
-      machineLearning.url,
-      { imagePath: asset.resizePath },
-      { ...machineLearning.tattoosRecognition,
-        mode: asset.type === AssetType.VIDEO ? MediaMode.VIDEO : MediaMode.IMAGE
-      },
-    );
+    if (asset.type === AssetType.VIDEO && asset.originalPath) {
+      const recognizedTattoos = await this.machineLearning.recognizeTattoosInVideo(
+        machineLearning.url,
+        { videoPath: asset.originalPath },
+        { ...machineLearning.tattoosRecognition,
+          assetId: id,
+        }
+      );
 
-    const response = {
-      id: id,
-      data: recognizedTattoos.map((tattoo) => ({
-        image: tattoo.image,
-        score: tattoo.score,
-      })),
-    };
+      response = {
+        id: id,
+        filePath: recognizedTattoos.filePath,
+        mediaMode: MediaMode.VIDEO,
+      };
+    }
+    else if (asset.type === AssetType.IMAGE && asset.resizePath) {
+      const recognizedTattoos = await this.machineLearning.recognizeTattoosInImage(
+        machineLearning.url,
+        { imagePath: asset.resizePath },
+        { ...machineLearning.tattoosRecognition,
+          assetId: id,
+        }
+      );
+
+      response = {
+        id: id,
+        filePath: recognizedTattoos.filePath,
+        mediaMode: MediaMode.IMAGE,
+      };
+    }
+    // const detectedWeapons = await this.machineLearning.detectWeapons(
+    //   machineLearning.url,
+    //   { imagePath: asset.resizePath },
+    //   { ...machineLearning.weaponsDetection,
+    //     mode: asset.type === AssetType.VIDEO ? MediaMode.VIDEO : MediaMode.IMAGE
+    //   },
+    // );
+
+    // const response = {
+    //   id: id,
+    //   data: detectedWeapons.map((weapon) => ({
+    //     image: weapon.image,
+    //     score: weapon.score,
+    //   })),
+    // };
 
     return response;
   }

@@ -352,7 +352,6 @@ Class | Method | HTTP request | Description
  - [TagTypeEnum](doc//TagTypeEnum.md)
  - [TattoosRecognitionConfig](doc//TattoosRecognitionConfig.md)
  - [TattoosRecognitionResponseDto](doc//TattoosRecognitionResponseDto.md)
- - [TattoosRecognizeItem](doc//TattoosRecognizeItem.md)
  - [ThumbnailFormat](doc//ThumbnailFormat.md)
  - [TimeBucketResponseDto](doc//TimeBucketResponseDto.md)
  - [TimeBucketSize](doc//TimeBucketSize.md)

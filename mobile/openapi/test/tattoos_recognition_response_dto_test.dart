@@ -16,13 +16,20 @@ void main() {
   // final instance = TattoosRecognitionResponseDto();
 
   group('test TattoosRecognitionResponseDto', () {
-    // List<TattoosRecognizeItem> data (default value: const [])
-    test('to test the property `data`', () async {
+    // Path to the media file
+    // String filePath
+    test('to test the property `filePath`', () async {
       // TODO
     });
 
     // String id
     test('to test the property `id`', () async {
+      // TODO
+    });
+
+    // Media type (image|video)
+    // String mediaMode
+    test('to test the property `mediaMode`', () async {
       // TODO
     });
 

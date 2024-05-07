@@ -51,8 +51,7 @@ class Face(TypedDict):
     score: float
 
 class RecognizedTattoos(TypedDict):
-    image: str
-    score: float
+    filePath: str
 
 def has_profiling(obj: Any) -> TypeGuard[HasProfiling]:
     return hasattr(obj, "profiling") and isinstance(obj.profiling, dict)

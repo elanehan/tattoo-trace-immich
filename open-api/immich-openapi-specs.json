@@ -9613,6 +9613,9 @@
       },
       "TattoosRecognitionConfig": {
         "properties": {
+          "assetId": {
+            "type": "string"
+          },
           "enabled": {
             "type": "boolean"
           },
@@ -9639,36 +9642,27 @@
       },
       "TattoosRecognitionResponseDto": {
         "properties": {
-          "data": {
-            "items": {
-              "$ref": "#/components/schemas/TattoosRecognizeItem"
-            },
-            "type": "array"
+          "filePath": {
+            "description": "Path to the media file",
+            "type": "string"
           },
           "id": {
             "format": "uuid",
             "type": "string"
-          }
-        },
-        "required": [
-          "data",
-          "id"
-        ],
-        "type": "object"
-      },
-      "TattoosRecognizeItem": {
-        "properties": {
-          "image": {
-            "description": "base-64 encoded image",
-            "type": "string"
           },
-          "score": {
-            "type": "number"
+          "mediaMode": {
+            "description": "Media type (image|video)",
+            "enum": [
+              "image",
+              "video"
+            ],
+            "type": "string"
           }
         },
         "required": [
-          "image",
-          "score"
+          "filePath",
+          "id",
+          "mediaMode"
         ],
         "type": "object"
       },

@@ -4322,6 +4322,12 @@ export type TagTypeEnum = typeof TagTypeEnum[keyof typeof TagTypeEnum];
 export interface TattoosRecognitionConfig {
     /**
      * 
+     * @type {string}
+     * @memberof TattoosRecognitionConfig
+     */
+    'assetId'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof TattoosRecognitionConfig
      */
@@ -4360,37 +4366,32 @@ export interface TattoosRecognitionConfig {
  */
 export interface TattoosRecognitionResponseDto {
     /**
-     * 
-     * @type {Array<TattoosRecognizeItem>}
+     * Path to the media file
+     * @type {string}
      * @memberof TattoosRecognitionResponseDto
      */
-    'data': Array<TattoosRecognizeItem>;
+    'filePath': string;
     /**
      * 
      * @type {string}
      * @memberof TattoosRecognitionResponseDto
      */
     'id': string;
-}
-/**
- * 
- * @export
- * @interface TattoosRecognizeItem
- */
-export interface TattoosRecognizeItem {
     /**
-     * base-64 encoded image
+     * Media type (image|video)
      * @type {string}
-     * @memberof TattoosRecognizeItem
+     * @memberof TattoosRecognitionResponseDto
      */
-    'image': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TattoosRecognizeItem
-     */
-    'score': number;
+    'mediaMode': TattoosRecognitionResponseDtoMediaModeEnum;
 }
+
+export const TattoosRecognitionResponseDtoMediaModeEnum = {
+    Image: 'image',
+    Video: 'video'
+} as const;
+
+export type TattoosRecognitionResponseDtoMediaModeEnum = typeof TattoosRecognitionResponseDtoMediaModeEnum[keyof typeof TattoosRecognitionResponseDtoMediaModeEnum];
+
 /**
  * 
  * @export

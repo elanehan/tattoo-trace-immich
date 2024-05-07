@@ -8,6 +8,7 @@ import 'package:openapi/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**assetId** | **String** |  | [optional] 
 **enabled** | **bool** |  | 
 **minScore** | **double** |  | 
 **mode** | [**MediaMode**](MediaMode.md) |  | [optional] 

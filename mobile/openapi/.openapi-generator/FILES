@@ -163,7 +163,6 @@ doc/TagTypeEnum.md
 doc/TattoosRecognitionConfig.md
 doc/TattoosRecognitionResponseDto.md
 doc/TattoosRecognizeApi.md
-doc/TattoosRecognizeItem.md
 doc/ThumbnailFormat.md
 doc/TimeBucketResponseDto.md
 doc/TimeBucketSize.md
@@ -357,7 +356,6 @@ lib/model/tag_response_dto.dart
 lib/model/tag_type_enum.dart
 lib/model/tattoos_recognition_config.dart
 lib/model/tattoos_recognition_response_dto.dart
-lib/model/tattoos_recognize_item.dart
 lib/model/thumbnail_format.dart
 lib/model/time_bucket_response_dto.dart
 lib/model/time_bucket_size.dart
@@ -538,7 +536,6 @@ test/tag_type_enum_test.dart
 test/tattoos_recognition_config_test.dart
 test/tattoos_recognition_response_dto_test.dart
 test/tattoos_recognize_api_test.dart
-test/tattoos_recognize_item_test.dart
 test/thumbnail_format_test.dart
 test/time_bucket_response_dto_test.dart
 test/time_bucket_size_test.dart

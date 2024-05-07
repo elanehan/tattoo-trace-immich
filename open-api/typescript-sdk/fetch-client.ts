@@ -788,6 +788,7 @@ export type RecognitionConfig = {
 };
 export type MediaMode = "image" | "video";
 export type TattoosRecognitionConfig = {
+    assetId?: string;
     enabled: boolean;
     minScore: number;
     mode?: MediaMode;
@@ -887,14 +888,12 @@ export type CreateTagDto = {
 export type UpdateTagDto = {
     name?: string;
 };
-export type TattoosRecognizeItem = {
-    /** base-64 encoded image */
-    image: string;
-    score: number;
-};
 export type TattoosRecognitionResponseDto = {
-    data: TattoosRecognizeItem[];
+    /** Path to the media file */
+    filePath: string;
     id: string;
+    /** Media type (image|video) */
+    mediaMode: "image" | "video";
 };
 export type CreateUserDto = {
     email: string;

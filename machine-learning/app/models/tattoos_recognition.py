@@ -61,17 +61,6 @@ class TattoosRecognition(InferenceModel):
                 "score": 0.3
             }
         outputs.append(tattoo)
-        # match image_or_text:
-        #     case Image.Image():
-        #         if self.mode == "text":
-        #             raise TypeError("Cannot encode image as text-only model")
-        #         outputs: NDArray[np.float32] = self.vision_model.run(None, self.transform(image_or_text))[0][0]
-        #     case str():
-        #         if self.mode == "vision":
-        #             raise TypeError("Cannot encode text as vision-only model")
-        #         outputs = self.text_model.run(None, self.tokenize(image_or_text))[0][0]
-        #     case _:
-        #         raise TypeError(f"Expected Image or str, but got: {type(image_or_text)}")
 
         return outputs
 
@@ -159,12 +148,13 @@ class TattooDetector:
             ret, frame = video_cap.read()
 
             if ret:
-                results = self.model.track(frame, persist=True, conf=confidence)
-                frame_ = results[0].plot()
-                out.write(frame_)
+                results = self.model.predict(frame)
+                # Process the results to get bounding boxes, labels, and confidence scores
+                # Draw the bounding boxes and labels on the frame
+                out.write(frame)
 
                 if recognition_made is False:
-                    recognition_made = bool(len(results[0]))
+                    recognition_made = bool(len(results))
 
         video_cap.release()
         out.release()
@@ -194,77 +184,4 @@ class TattooDetector:
          
 
     def initialize_model(self, model_path):
-        self.model = torch.hub.load('ultralytics/yolov5', 'yolov5m', pretrained=True)
-
-
-    # @abstractmethod
-    # def tokenize(self, text: str) -> dict[str, NDArray[np.int32]]:
-    #     pass
-
-    # @abstractmethod
-    # def transform(self, image: Image.Image) -> dict[str, NDArray[np.float32]]:
-    #     pass
-
-    # @property
-    # def textual_dir(self) -> Path:
-    #     return self.cache_dir / "textual"
-
-    # @property
-    # def visual_dir(self) -> Path:
-    #     return self.cache_dir / "visual"
-
-    # @property
-    # def model_cfg_path(self) -> Path:
-    #     return self.cache_dir / "config.json"
-
-    # @property
-    # def textual_path(self) -> Path:
-    #     return self.textual_dir / f"model.{self.preferred_runtime}"
-
-    # @property
-    # def visual_path(self) -> Path:
-    #     return self.visual_dir / f"model.{self.preferred_runtime}"
-
-    # @property
-    # def tokenizer_file_path(self) -> Path:
-    #     return self.textual_dir / "tokenizer.json"
-
-    # @property
-    # def tokenizer_cfg_path(self) -> Path:
-    #     return self.textual_dir / "tokenizer_config.json"
-
-    # @property
-    # def preprocess_cfg_path(self) -> Path:
-    #     return self.visual_dir / "preprocess_cfg.json"
-
-    # @property
-    # def cached(self) -> bool:
-    #     return self.textual_path.is_file() and self.visual_path.is_file()
-
-    # @cached_property
-    # def model_cfg(self) -> dict[str, Any]:
-    #     log.debug(f"Loading model config for CLIP model '{self.model_name}'")
-    #     model_cfg: dict[str, Any] = json.load(self.model_cfg_path.open())
-    #     log.debug(f"Loaded model config for CLIP model '{self.model_name}'")
-    #     return model_cfg
-
-    # @cached_property
-    # def tokenizer_file(self) -> dict[str, Any]:
-    #     log.debug(f"Loading tokenizer file for CLIP model '{self.model_name}'")
-    #     tokenizer_file: dict[str, Any] = json.load(self.tokenizer_file_path.open())
-    #     log.debug(f"Loaded tokenizer file for CLIP model '{self.model_name}'")
-    #     return tokenizer_file
-
-    # @cached_property
-    # def tokenizer_cfg(self) -> dict[str, Any]:
-    #     log.debug(f"Loading tokenizer config for CLIP model '{self.model_name}'")
-    #     tokenizer_cfg: dict[str, Any] = json.load(self.tokenizer_cfg_path.open())
-    #     log.debug(f"Loaded tokenizer config for CLIP model '{self.model_name}'")
-    #     return tokenizer_cfg
-
-    # @cached_property
-    # def preprocess_cfg(self) -> dict[str, Any]:
-    #     log.debug(f"Loading visual preprocessing config for CLIP model '{self.model_name}'")
-    #     preprocess_cfg: dict[str, Any] = json.load(self.preprocess_cfg_path.open())
-    #     log.debug(f"Loaded visual preprocessing config for CLIP model '{self.model_name}'")
-    #     return preprocess_cfg
+        self.model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)

@@ -464,8 +464,6 @@ class ApiClient {
           return TattoosRecognitionConfig.fromJson(value);
         case 'TattoosRecognitionResponseDto':
           return TattoosRecognitionResponseDto.fromJson(value);
-        case 'TattoosRecognizeItem':
-          return TattoosRecognizeItem.fromJson(value);
         case 'ThumbnailFormat':
           return ThumbnailFormatTypeTransformer().decode(value);
         case 'TimeBucketResponseDto':

@@ -13,12 +13,21 @@ part of openapi.api;
 class TattoosRecognitionConfig {
   /// Returns a new [TattoosRecognitionConfig] instance.
   TattoosRecognitionConfig({
+    this.assetId,
     required this.enabled,
     required this.minScore,
     this.mode,
     required this.modelName,
     this.modelType,
   });
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? assetId;
 
   bool enabled;
 
@@ -44,6 +53,7 @@ class TattoosRecognitionConfig {
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is TattoosRecognitionConfig &&
+    other.assetId == assetId &&
     other.enabled == enabled &&
     other.minScore == minScore &&
     other.mode == mode &&
@@ -53,6 +63,7 @@ class TattoosRecognitionConfig {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
+    (assetId == null ? 0 : assetId!.hashCode) +
     (enabled.hashCode) +
     (minScore.hashCode) +
     (mode == null ? 0 : mode!.hashCode) +
@@ -60,10 +71,15 @@ class TattoosRecognitionConfig {
     (modelType == null ? 0 : modelType!.hashCode);
 
   @override
-  String toString() => 'TattoosRecognitionConfig[enabled=$enabled, minScore=$minScore, mode=$mode, modelName=$modelName, modelType=$modelType]';
+  String toString() => 'TattoosRecognitionConfig[assetId=$assetId, enabled=$enabled, minScore=$minScore, mode=$mode, modelName=$modelName, modelType=$modelType]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
+    if (this.assetId != null) {
+      json[r'assetId'] = this.assetId;
+    } else {
+    //  json[r'assetId'] = null;
+    }
       json[r'enabled'] = this.enabled;
       json[r'minScore'] = this.minScore;
     if (this.mode != null) {
@@ -88,6 +104,7 @@ class TattoosRecognitionConfig {
       final json = value.cast<String, dynamic>();
 
       return TattoosRecognitionConfig(
+        assetId: mapValueOfType<String>(json, r'assetId'),
         enabled: mapValueOfType<bool>(json, r'enabled')!,
         minScore: mapValueOfType<double>(json, r'minScore')!,
         mode: MediaMode.fromJson(json[r'mode']),

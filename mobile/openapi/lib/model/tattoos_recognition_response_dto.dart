@@ -13,32 +13,40 @@ part of openapi.api;
 class TattoosRecognitionResponseDto {
   /// Returns a new [TattoosRecognitionResponseDto] instance.
   TattoosRecognitionResponseDto({
-    this.data = const [],
+    required this.filePath,
     required this.id,
+    required this.mediaMode,
   });
 
-  List<TattoosRecognizeItem> data;
+  /// Path to the media file
+  String filePath;
 
   String id;
 
+  /// Media type (image|video)
+  TattoosRecognitionResponseDtoMediaModeEnum mediaMode;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is TattoosRecognitionResponseDto &&
-    _deepEquality.equals(other.data, data) &&
-    other.id == id;
+    other.filePath == filePath &&
+    other.id == id &&
+    other.mediaMode == mediaMode;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (data.hashCode) +
-    (id.hashCode);
+    (filePath.hashCode) +
+    (id.hashCode) +
+    (mediaMode.hashCode);
 
   @override
-  String toString() => 'TattoosRecognitionResponseDto[data=$data, id=$id]';
+  String toString() => 'TattoosRecognitionResponseDto[filePath=$filePath, id=$id, mediaMode=$mediaMode]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'data'] = this.data;
+      json[r'filePath'] = this.filePath;
       json[r'id'] = this.id;
+      json[r'mediaMode'] = this.mediaMode;
     return json;
   }
 
@@ -50,8 +58,9 @@ class TattoosRecognitionResponseDto {
       final json = value.cast<String, dynamic>();
 
       return TattoosRecognitionResponseDto(
-        data: TattoosRecognizeItem.listFromJson(json[r'data']),
+        filePath: mapValueOfType<String>(json, r'filePath')!,
         id: mapValueOfType<String>(json, r'id')!,
+        mediaMode: TattoosRecognitionResponseDtoMediaModeEnum.fromJson(json[r'mediaMode'])!,
       );
     }
     return null;
@@ -99,8 +108,83 @@ class TattoosRecognitionResponseDto {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'data',
+    'filePath',
     'id',
+    'mediaMode',
   };
 }
+
+/// Media type (image|video)
+class TattoosRecognitionResponseDtoMediaModeEnum {
+  /// Instantiate a new enum with the provided [value].
+  const TattoosRecognitionResponseDtoMediaModeEnum._(this.value);
+
+  /// The underlying value of this enum member.
+  final String value;
+
+  @override
+  String toString() => value;
+
+  String toJson() => value;
+
+  static const image = TattoosRecognitionResponseDtoMediaModeEnum._(r'image');
+  static const video = TattoosRecognitionResponseDtoMediaModeEnum._(r'video');
+
+  /// List of all possible values in this [enum][TattoosRecognitionResponseDtoMediaModeEnum].
+  static const values = <TattoosRecognitionResponseDtoMediaModeEnum>[
+    image,
+    video,
+  ];
+
+  static TattoosRecognitionResponseDtoMediaModeEnum? fromJson(dynamic value) => TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer().decode(value);
+
+  static List<TattoosRecognitionResponseDtoMediaModeEnum> listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <TattoosRecognitionResponseDtoMediaModeEnum>[];
+    if (json is List && json.isNotEmpty) {
+      for (final row in json) {
+        final value = TattoosRecognitionResponseDtoMediaModeEnum.fromJson(row);
+        if (value != null) {
+          result.add(value);
+        }
+      }
+    }
+    return result.toList(growable: growable);
+  }
+}
+
+/// Transformation class that can [encode] an instance of [TattoosRecognitionResponseDtoMediaModeEnum] to String,
+/// and [decode] dynamic data back to [TattoosRecognitionResponseDtoMediaModeEnum].
+class TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer {
+  factory TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer() => _instance ??= const TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer._();
+
+  const TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer._();
+
+  String encode(TattoosRecognitionResponseDtoMediaModeEnum data) => data.value;
+
+  /// Decodes a [dynamic value][data] to a TattoosRecognitionResponseDtoMediaModeEnum.
+  ///
+  /// If [allowNull] is true and the [dynamic value][data] cannot be decoded successfully,
+  /// then null is returned. However, if [allowNull] is false and the [dynamic value][data]
+  /// cannot be decoded successfully, then an [UnimplementedError] is thrown.
+  ///
+  /// The [allowNull] is very handy when an API changes and a new enum value is added or removed,
+  /// and users are still using an old app with the old code.
+  TattoosRecognitionResponseDtoMediaModeEnum? decode(dynamic data, {bool allowNull = true}) {
+    if (data != null) {
+      switch (data) {
+        case r'image': return TattoosRecognitionResponseDtoMediaModeEnum.image;
+        case r'video': return TattoosRecognitionResponseDtoMediaModeEnum.video;
+        default:
+          if (!allowNull) {
+            throw ArgumentError('Unknown enum value to decode: $data');
+          }
+      }
+    }
+    return null;
+  }
+
+  /// Singleton [TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer] instance.
+  static TattoosRecognitionResponseDtoMediaModeEnumTypeTransformer? _instance;
+}
+
 

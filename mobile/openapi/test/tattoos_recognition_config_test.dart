@@ -16,6 +16,11 @@ void main() {
   // final instance = TattoosRecognitionConfig();
 
   group('test TattoosRecognitionConfig', () {
+    // String assetId
+    test('to test the property `assetId`', () async {
+      // TODO
+    });
+
     // bool enabled
     test('to test the property `enabled`', () async {
       // TODO

@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { CLIPConfig, RecognitionConfig, TattoosRecognitionConfig } from '../smart-info/dto';
 
 export const IMachineLearningRepository = 'IMachineLearningRepository';
@@ -9,6 +10,10 @@ export interface VisionModelInput {
 
 export interface TextModelInput {
   text: string;
+}
+
+export interface VideoModelInput {
+  videoPath: string;
 }
 
 export interface BoundingBox {
@@ -29,8 +34,7 @@ export interface DetectFaceResult {
 // Define the structure of the result of the detectTattoo model
 // Our model returns images with tattoos, confidence scores
 export interface RecognizeTattoosResult {
-  image: string; // base-64 encoded image
-  score: number;
+  filePath: string; // Path to the image
 }
 
 export enum ModelType {
@@ -54,5 +58,6 @@ export interface IMachineLearningRepository {
   encodeImage(url: string, input: VisionModelInput, config: CLIPConfig): Promise<number[]>;
   encodeText(url: string, input: TextModelInput, config: CLIPConfig): Promise<number[]>;
   detectFaces(url: string, input: VisionModelInput, config: RecognitionConfig): Promise<DetectFaceResult[]>;
-  recognizeTattoos(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<RecognizeTattoosResult[]>;
+  recognizeTattoosInImage(url: string, input: VisionModelInput, config: TattoosRecognitionConfig): Promise<RecognizeTattoosResult>;
+  recognizeTattoosInVideo(url: string, input: VideoModelInput, config: TattoosRecognitionConfig): Promise<RecognizeTattoosResult>;
 }

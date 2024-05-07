@@ -4,9 +4,6 @@ import os
 import signal
 import threading
 import time
-import cv2
-import numpy as np
-import base64
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Callable, Iterator
@@ -26,8 +23,13 @@ from .schemas import (
     MessageResponse,
     ModelType,
     TextResponse,
-    RecognizedTattoos
+    RecognizedTattoos,
 )
+
+import cv2
+import numpy as np
+import base64
+from pathlib import Path
 
 MultiPartParser.max_file_size = 2**26  # spools to disk if payload is 64 MiB or larger
 
@@ -37,10 +39,10 @@ lock = threading.Lock()
 active_requests = 0
 last_called: float | None = None
 
+
 ### -- test code
 from .models.tattoos_recognition import TattooDetector
-tattoo_detector = TattooDetector('./app/models/weight/best.pt')
-
+tattoo_detector = TattooDetector()
 
 
 @asynccontextmanager
@@ -100,9 +102,12 @@ async def predict(
     options: str = Form(default="{}"),
     text: str | None = Form(default=None),
     image: UploadFile | None = None,
+    video: str | None = Form(alias="videoFilePath", default=None)
 ) -> Any:
     if image is not None:
         inputs: str | bytes = await image.read()
+    elif video is not None:
+        inputs = video
     elif text is not None:
         inputs = text
     else:
@@ -112,14 +117,32 @@ async def predict(
     except orjson.JSONDecodeError:
         raise HTTPException(400, f"Invalid options JSON: {options}")
 
-    if model_type == ModelType.TATTOOS_RECOGNITION:    
-        image = inputs
-        recognition_response = tattoo_detector.run_image_prediction_byte_stream(image)
-        return ORJSONResponse(recognition_response)
+    if model_type == ModelType.TATTOOS_RECOGNITION:
+        mediaType = kwargs.get("mode", "")
+        recognition_threshold = eval(options).get("minScore", 0.2)
 
-    model = await load(await model_cache.get(model_name, model_type, **kwargs))
-    model.configure(**kwargs)
-    outputs = await run(model.predict, inputs)
+        if mediaType == "image":
+            image = inputs
+            save_directory = Path("/ml-results/")
+            asset_id = kwargs.get("assetId", None)
+            recognition_response = tattoo_detector.run_image_prediction_byte_stream(image, 
+                                                                                asset_id, 
+                                                                                save_directory,
+                                                                                recognition_threshold)
+
+            return ORJSONResponse(recognition_response)
+            
+        elif mediaType == "video":
+            video_file_path = Path(inputs)
+            save_directory = Path("/ml-results/")
+            video_file_path = save_directory / video_file_path.name
+
+            recognition_response = tattoo_detector.run_prediction_video(video_file_path, 
+                                                                      save_directory,
+                                                                      recognition_threshold)
+
+            return ORJSONResponse(recognition_response)
+        
 
     model = await load(await model_cache.get(model_name, model_type, **kwargs))
     model.configure(**kwargs)

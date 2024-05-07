@@ -192,7 +192,6 @@ part 'model/tag_response_dto.dart';
 part 'model/tag_type_enum.dart';
 part 'model/tattoos_recognition_config.dart';
 part 'model/tattoos_recognition_response_dto.dart';
-part 'model/tattoos_recognize_item.dart';
 part 'model/thumbnail_format.dart';
 part 'model/time_bucket_response_dto.dart';
 part 'model/time_bucket_size.dart';
